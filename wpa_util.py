@@ -78,22 +78,22 @@ class WifiUtil():
 
     @classmethod
     def del_network(cls, network_id):
-        ok = WpaHelper.command(WPA_CMD.DEL_NETWORK, network_id)
+        ok = WpaHelper.command(WPA_CMD.DEL_NETWORK, network_id)[0]
         return ok
 
     @classmethod
     def set_network(cls, network_id, ssid=None, password=None):
         ok = False
         if ssid:
-            ok = WpaHelper.command(WPA_CMD.SET_NETWORK, network_id, 'ssid', '"'+ssid+'"')
+            ok = WpaHelper.command(WPA_CMD.SET_NETWORK, network_id, 'ssid', '"'+ssid+'"')[0]
         if ok and password:
-            ok = WpaHelper.command(WPA_CMD.SET_PASSWORD, network_id, '"'+password+'"')
+            ok = WpaHelper.command(WPA_CMD.SET_PASSWORD, network_id, '"'+password+'"')[0]
         
         return ok
 
     @classmethod
     def enable_network(cls, network_id, enable=True):
-        ok = WpaHelper.command(WPA_CMD.ENABLE_NETWORK, network_id, enable)
+        ok = WpaHelper.command(WPA_CMD.ENABLE_NETWORK, network_id, enable)[0]
         return ok
 
     @classmethod
@@ -135,7 +135,7 @@ class WifiUtil():
                     res.append(new_dict)
             return res
             
-        ok = WpaHelper.command(WPA_CMD.SCAN)
+        ok = WpaHelper.command(WPA_CMD.SCAN)[0]
         if ok:
             time.sleep(wait_time)
             ok, cmplt_proc = WpaHelper.command(WPA_CMD.SCAN_RESULT)
